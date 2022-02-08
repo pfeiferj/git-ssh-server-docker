@@ -1,0 +1,2 @@
+echo "The following commands are available:"
+ls git-shell-commands
