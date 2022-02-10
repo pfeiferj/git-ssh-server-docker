@@ -9,17 +9,40 @@ A Docker image for easily setting up an ssh based git server.
 ## Using this image
 ### Basic Example
 1. Start a container using this image, forwarding port 22, and mounting the `/config` and `/jail/home/git` directories:
-```
-docker run -d -p 22:22 -v config:/config -v repositories:/jail/home/git ghcr.io/pfeiferj/git-ssh-server-docker:latest
-```
+	```
+	docker run -d -p 22:22 -v config:/config -v repositories:/jail/home/git ghcr.io/pfeiferj/git-ssh-server-docker:latest
+	```
 
 2. Add an ssh public key to `config/authorized_keys`.
-	* Generate an ssh key: `ssh-keygen`
-	* Add the generated ssh key to the authorized_keys file: `cat ~/.ssh/id_rsa.pub >> config/authorized_keys`
-3. Login via ssh to the server: `ssh git@127.0.0.1`
-4. Create an empty repo using: `create-repo my-example-repo`
-5. Disconnect from the server and clone the repo you created: `git clone git@127.0.0.1:my-example-repo`
-	* If you forwarded a port other than 22 then you must use an ssh url containing the full path to the repo: `git clone ssh://git@127.0.0.1:2222/home/git/my-example-repo`
+	* Generate an ssh key if you have not already: 
+		```
+		ssh-keygen
+		```
+
+	* Add the generated ssh key to the authorized_keys file: 
+		```
+		cat ~/.ssh/id_rsa.pub >> config/authorized_keys
+		```
+3. Login via ssh to the server:
+	```
+	ssh git@127.0.0.1
+	```
+	* If you forwarded a port other than 22 use the -p flag:
+		```
+		ssh git@127.0.0.1 -p 2222
+		```
+4. Create an empty repo using: 
+	```
+	create-repo my-example-repo
+	```
+5. Disconnect from the server and clone the repo you created:
+	```
+	git clone git@127.0.0.1:my-example-repo
+	```
+	* If you forwarded a port other than 22 then you must use an ssh url containing the full path to the repo:
+		```
+		git clone ssh://git@127.0.0.1:2222/home/git/my-example-repo
+		```
 6. You can now commit files to the cloned repo and push to the server.
 
 ### Persistent Data
